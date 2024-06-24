@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+</head>
+<body style="font-family: poppins, sans-serif;">
+<div class="x-data" x-data="mainFunction">
+
+
+    <!-- x-init -->
+
+
+    <div >
+        <h1>x-init</h1>
+        <p>The x-init directive allows you to hook into the initialization phase of any element in Alpine.</p>
+        
+        <br><br>
+        <p x-init="message='Hello Alpine!'" x-text="message"></p>
+        <hr><hr>
+    </div>
+
+
+    <!-- x-show -->
+
+    <div >
+        <h1>x-Show</h1>
+        <p>is a directive used to toggle the visibility of an element based on a given condition. <br> When the condition evaluates to true, the element is shown; when it evaluates to false, the element is hidden</p>
+        
+        <br><br>
+        <button @click="open = !open" >Toggle Dropdown</button>
+        <div x-show="open"  x-transition>
+            Dropdown
+        </div>
+        <hr><hr>
+    </div>
+
+
+    <!-- x-bind -->
+
+
+    <div >
+        <h1>x-Bind</h1>
+        <p>In Alpine.js, x-bind is a directive that binds an element's attributes to Alpine.js expressions. <br> This allows dynamic updating of attributes based on the component's state.</p>
+        
+        <br><br>
+        <button  @click="isDisabled = !isDisabled ">Disable button</button>
+        <button :disabled="isDisabled" :style="{ backgroundColor: changeColor ? 'red' : '' }"  @click="changeColor= !changeColor">Make bg red</button>
+        <input type="text" :placeholder="placeholder">
+        <hr><hr>
+    </div>
+
+
+    <!-- x-on -->
+     
+
+    <div >
+        <h1>x-on</h1>
+        <p>x-on allows you to easily run code on dispatched DOM events</p>
+        
+        <br><br>
+        <button x-on:click="alert('Hello world')">Hello world</button>
+        <input type="text"  :placeholder="pressEnter" @keyup.ctrl.enter="alert('Submitted!')">
+        <hr><hr>
+    </div>
+
+    <!-- x-text -->
+    <div >
+        <h1>x-text & x-html</h1>
+        <p>x-text sets the text content of an element to the result of a given expression.</p>
+        <p>x-html sets the "innerHTML" property of an element to the result of a given expression.</p>
+        <br><br>
+        <div>
+            Username: <strong x-text="username"></strong>
+        </div>
+        <hr><hr>
+    </div>
+
+
+    <!-- x-model -->
+    <div >
+        <h1>x-model</h1>
+        <p>x-model allows you to bind the value of an input element to Alpine data.</p>
+        <br><br>
+        
+        <input type="checkbox" @click="valueInput = true" x-model="show">
+        <label for="checkbox" x-show="valueInput" x-text="show"></label>
+
+
+        <hr><hr>
+    </div>
+
+    <!-- x-modelabel -->
+    <div >
+        <h1>x-modelable</h1>
+        <p>x-modelable allows you to expose any Alpine property as the target of the x-model directive.</p>
+        <br><br>
+    
+        <button @click="number++">Increment</button>    
+        Number: <span x-text="number"></span>
+        <hr><hr>
+    </div>
+
+
+    <!-- x-effect -->
+
+    <div >
+        <h1>x-effect</h1>
+        <p>You can think of it as a watcher where you don't have to specify what property to watch,<br> it will watch all properties used within it.</p>
+        <br><br>
+
+        <div x-effect="console.log(label)">
+            <input type="text" x-model="label">
+            <span x-text="label"></span>
+        </div>
+    
+        <hr><hr>
+    </div>
+
+
+    <!-- x-ref -->
+    <div >
+        <h1>x-ref</h1>
+        <p>getElementById and querySelector</p>
+        <br><br>
+
+        <button @click="$refs.text.remove()">Remove Text</button>
+ 
+        <span x-ref="text">Hello 👋</span>
+    
+        <hr><hr>
+    </div>
+
+
+
+
+<!-- Magic properties -->
+
+<h1 style="text-align: center;">Magic properties</h1>
+
+
+<!-- $el -->
+<div >
+    <h1>$el</h1>
+    <p>$el is a magic property that can be used to retrieve the current DOM node.</p>
+    <br><br>
+
+    <button @click="$el.innerHTML = 'Hello World!'">Replace me with "Hello World!"</button>
+
+
+    <hr><hr>
+</div>
+
+
+<!-- $refs -->
+
+<div >
+    <h1>$refs</h1>
+    <p>$refs is a magic property that can be used to retrieve DOM elements marked with x-ref</p>
+    <br><br>
+
+    <button @click="$refs.text.remove()">Remove Text</button>
+ 
+    <span x-ref="text">Hello 👋</span>
+
+    <hr><hr>
+</div>
+
+
+<!-- $watch -->
+<div >
+    <h1>$watch</h1>
+    <p>You can "watch" a component property using the $watch magic method.</p>
+    <br><br>
+
+    <div  x-init="$watch('openMe',(value, oldValue) => console.log(value , oldValue))">
+        <button @click="openMe = ! openMe">Toggle Open</button>
+    </div>
+    
+    <hr><hr>
+</div>
+
+
+<!-- dispatch -->
+
+<div >
+    <h1>$dispatch</h1>
+    <p>$dispatch is a helpful shortcut for dispatching browser events.</p>
+    <br><br>
+
+    <div @fy="alert('Hello World!')">
+        <button @click="$dispatch('fy')">
+            Notify
+        </button>
+    </div>
+    
+    <hr><hr>
+</div>
+
+<!-- nextTick -->
+
+<div >
+    <h1>$nextTick</h1>
+    <p>$nextTick is a magic property that allows you to only execute a given expression AFTER Alpine has made its reactive DOM updates.</p>
+    <br><br>
+
+    <div x-data="{ title: 'Hello' }">
+        <button
+            @click="
+                title = 'Hello World!';
+                $nextTick(() => { console.log($el.innerText) });
+            "
+            x-text="title"
+        ></button>
+    </div>
+    
+    <hr><hr>
+</div>
+
+</div>
+
+    <script>
+        function mainFunction(){
+            return {
+                message:'',
+                // init
+                open:false,
+                //show
+                isDisabled: true,
+                changeColor: false,
+                placeholder: 'Enter Ammount',
+                //bind
+                pressEnter:'press ctrl + enter to submit',
+                //x-on
+                username: 'Ac',
+                //x-text & x-html
+                show:false,
+                valueInput: false,
+                //x-model
+                number:0,
+                //x-modelable
+                label:'',
+                //x-effect
+//Magic properties
+                openMe:false,
+              
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
